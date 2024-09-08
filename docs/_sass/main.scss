@@ -1,0 +1,33 @@
+//general stylings
+//downloaded fonts: Handjet, Roboto Mono
+html{
+    min-height: 100%;
+}
+footer{
+    background-color: antiquewhite;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
+}
+.current {
+    color: green;
+}
+.nav-bar-container{
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.nav-bar-item{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-family: Roboto Mono;
+    font-size: 50px;
+}
+.footer-container{
+    color: black;
+}

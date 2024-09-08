@@ -7,7 +7,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-
+show_excerpts: true
 title: Jackson's Digital Portfolio
 email: jacksonepic@tamu.edu
 description: >- # this means to ignore newlines until "baseurl:"
@@ -23,12 +23,14 @@ github_username:  JaX-Y1
 theme: minima
 plugins:
   - jekyll-feed
-
+  - jemoji
 defaults:
   - scope:
       path: "assets/images"
     values:
       image: true
+
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
