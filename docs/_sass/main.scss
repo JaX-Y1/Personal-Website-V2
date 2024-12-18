@@ -1,10 +1,91 @@
 //general stylings
-//downloaded fonts: Handjet, Roboto Mono
+//downloaded fonts: Handjet, Roboto Mono, IBM Plex Sans
 html{
     min-height: 100%;
 }
+body{
+    margin: 0;
+}
+
+h1{
+    color: black;
+    font-family: IBM Plex Sans;
+}
+p{
+    color: rgb(123, 123, 123);
+    font-family: Roboto Mono;
+}
+//****
+//Navigation Bar Classes
+//****
+.current {
+    color: green !important;
+}
+.nav-container{
+    background-color: white;
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 100%;
+    padding-bottom: 5px;
+}
+.nav-bar-item-container{
+    margin-left: 5%;
+    margin-right: 0px;
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+.nav-bar-container-underline{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+}
+.nav-underline{
+    border: 1px solid black;
+    border-bottom: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    width: 95%;
+    height: 0px;
+}
+.nav-bar-item{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-family: Roboto Mono;
+    font-size: 30px;
+}
+.nav-bar-item a:hover{
+    color: green !important;
+}
+.nav-bar-item a{
+    text-decoration: none;
+}
+.nav-bar-item a:active{
+    color: initial;
+}
+.nav-bar-item a:visited{
+    color: initial;
+}
+
+//****
+//Footer Classes
+//****
+
+.footer-container{
+    color: black;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 footer{
-    background-color: antiquewhite;
+    background-color: rgb(176, 176, 176);
     position: absolute;
     left: 0;
     bottom: 0;
@@ -12,22 +93,167 @@ footer{
     width: 100%;
     overflow: hidden;
 }
-.current {
-    color: green;
-}
-.nav-bar-container{
-    margin-left: 0px;
-    margin-right: 0px;
+//posts CSS
+.post-h1{
+    font-family: IBM Plex Sans;
     width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.post-metadata{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.post-date{
+    font-family: IBM Plex Sans;
+    font-size: large;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.post-categories{
     display: flex;
     flex-direction: row;
 }
-.nav-bar-item{
-    margin-left: 10px;
-    margin-right: 10px;
-    font-family: Roboto Mono;
-    font-size: 50px;
+.post-categories > .cat{
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    min-width: 50px;
+    border: 2px black solid;
+    border-radius: 25px;
+    height: fit-content;
 }
-.footer-container{
+.post-categories > .cat > p{
+    margin: 0;
+}
+.post-categories > .coding{
+    font-family: Handjet;
+    background-color: greenyellow;
+}
+.post-categories > .blog{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: yellow;
+}
+
+.post-content{
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+//socials
+.social-container{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
     color: black;
+    border-radius: 10px;
+    padding: 5px;
+    text-decoration: none;
+    transition: all 0.25s;
+    -webkit-transition: all 0.25s;
+}
+.social-container:hover{
+    border: 1px solid rgb(72, 72, 72);
+    color: rgb(72, 72, 72) !important;
+    box-shadow: 0 0 20px white;
+    transform: scale(1.1);
+}
+.social-container a:visited{
+    color: black;
+}
+.social-container img{
+    margin-left: 5px;
+}
+.social-container p{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: black !important;
+}
+
+//home page
+.lander-back-container{
+    position: relative;
+    width: 100%;
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: black;
+    //border: 1px solid black;
+}
+#lander-canvas{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.title-container{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.title-container h1{
+    margin: 0px;
+    color: rgb(6, 255, 72) !important;
+    text-shadow: 2px 2px black;
+    padding-bottom: 10px;
+    font-family: Roboto Mono !important; 
+}
+.title-container h1::after{
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #ff000000, #ff000000, #00ff00, #0000ff00, #ff000000);
+    background-size: 300% 100%;
+    animation: animate-border 5s linear infinite;
+}
+.title-container .border{
+    position: relative;
+}
+@keyframes animate-border {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 0%;
+    }
+    // 100% {
+    //     background-position: 0% 0%;
+    // }
+}
+
+.home-content{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+//about page
+.about-header-container{
+    width: 100%;
+}
+.about-header{
+    margin-top: 20px;
+    background-color: rgb(176, 176, 176);
+    width: fit-content;
+    padding: 2px 30px;
+    margin-left: 5%;
+    border-radius: 20px;
+}
+.about-content{
+    margin-left: 5%;
+    margin-top: 50px;
 }

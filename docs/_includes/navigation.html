@@ -1,12 +1,15 @@
 
 <nav style="width: 100%;">
-  <div class="nav-bar-container">
+  <div class="nav-container">
+  <div class="nav-bar-item-container">
     {% for item in site.data.navigation %}
     <div class="nav-bar-item">
-    <a href="{{site.baseurl}}{{ item.link }}" {% if page.url == item.link %}class="current"{% endif %}>
-      {{ item.name }}
-    </a>
+      <a href="{{site.baseurl}}{{ item.link }}" {% if (page.url == item.link) or (page.url contains 'blog' and item.link == '/blog.html') %}class="current"{% endif %}>
+        {{ item.name }}
+      </a>
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
+  <div class="nav-bar-container-underline"><div class="nav-underline"></div></div>
 </div>
 </nav>

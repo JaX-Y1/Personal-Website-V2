@@ -7,9 +7,12 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
+
+#LOCAL BUILDING: bundle exec jekyll serve
+
 show_excerpts: true
 title: Jackson's Digital Portfolio
-email: jacksonepic@tamu.edu
+email: jackson.marshall1204@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
@@ -29,6 +32,11 @@ defaults:
       path: "assets/images"
     values:
       image: true
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      permalink: "blog/:title:output_ext"
 
 
 

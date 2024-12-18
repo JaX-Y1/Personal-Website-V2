@@ -1,7 +1,18 @@
 ---
 layout: default
+permalink: blog/:year/:month/:day/:title:output_ext
+isPost: true
 ---
-<h1>{{page.title}}</h1>
-<p>{{page.date | date_to_string }} - {{page.author}}</p>
-
+<h1 class="post-h1">{{page.title}}</h1>
+<div class="post-metadata">
+    <!-- - {{page.author}} -->
+<p class="post-date">{{page.date | date_to_string: "ordinal", "US" }}</p>
+<div class="post-categories">
+    <!-- page.categories -->
+    <div class="cat coding"><p>Coding</p></div>
+    <div class="cat blog"><p>Blog</p></div>
+</div>
+</div>
+<div class="post-content">
 {{ content }}
+</div>
