@@ -2,11 +2,12 @@
 layout: post
 author: Jackson
 excerpt: So it's no longer highschool and I need an updated personal website.
+categories: [Coding, Blog]
 ---
 <p>
     So it's no longer highschool and I need an updated personal website. However,
     my first digital portfolio was more of a experiment rather than an actual portfolio.
-    I never updated since it's creation, and it's really cringe (but I'll keep it online
+    I never updated it since it's creation, and it's really cringe (but I'll keep it online
     just for fun 😁).
     <br/>
     <br/>
@@ -16,6 +17,60 @@ excerpt: So it's no longer highschool and I need an updated personal website.
     mind. The <a href="https://jekyllrb.com/docs/step-by-step/01-setup/">step by step tutorial</a>
     in the Jekyll docs is where I ended up at, and it cleared up a lot of confusion I had when jumping
     head first into a theme template.
-</p>
+    <br/>
+    <br/>
+
+    Before starting the website, I wanted to familiarize myself with what Jekyll had to offer.
+    For example, built-in code highlighting can be accomplished easily with Liquid syntax
+    highlighting. 
+    <br/>
+    <br/>
+    {% highlight liquid %}{% raw %}
+    {% highlight javascript %}
+    function helloWorld {
+        var myVar = 10;
+    }
+    {% endhighlight %}{% endraw %}{% endhighlight %}
+    <br/>
+    Turns into: 
+    </p>
+    {% highlight javascript %}
+        function helloWorld() {
+            var myVar = 10;
+        }{% endhighlight %}
+    <p>
+    <br/>
+    Pretty cool huh? Liquid allows for a lot of cool formatting and filtering tricks.
+    <br/>
+    <br/>
+    Looking at the bigger picture however, Jekyll makes it easy to structure multi-page websites.
+    You can utilize the <strong>_layouts</strong> folder to create page templates,
+    which allows for easy implementation of a universal navigation bar, header, or footer.
+    <br/>
+    <br/>
+    One of these layouts I chose to use is for posts, which have an especially easy implementation
+    with Jekyll. First you have to create a <strong>_posts</strong> folder. Each post in that
+    folder has to follow a specific name format in order for the title and date to be
+    automatically determined. For example, this page's file is called <strong>"2024-09-07-Making-My-Digital-Portfolio.html"</strong>.
+    The date comes first in the filename, then the title, with hyphens representating spaces. Of course
+    this format can be changed in the <strong>_config.yml</strong> file, which contains global 
+    variables, default URLs, and other Jekyll customization options.
+    <br/>
+    <br/>
+    The only thing left to do is to add a page that can provide access these individual
+    blog links, preferably using an iteration. Luckily, iterations are easily done through liquid.
+    For example, my <a href="{{site.baseurl}}/blog.html">Blog</a> page uses a for loop like this:
+    {% highlight liquid %}{% raw %}
+        {% for post in site.posts %}
+            {% comment %} 
+                Add and style individual blog post links 
+            {% endcomment %}
+        {% endfor %}{% endraw %}{% endhighlight %}
+    </p>
+    <p>
+        Once you implement access to each blog page, that's pretty much it. Everything else
+        comes down to customization and what pages you want or don't want to implement.
+        Thank you for reading my first blog on my brand new website!
+    </p>
 <br/>
-<!-- <img src="{{site.baseurl}}/assets/images/angry_bird.jpg"/> -->
+

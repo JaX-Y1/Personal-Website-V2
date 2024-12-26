@@ -9,10 +9,53 @@ isPost: true
 <p class="post-date">{{page.date | date_to_string: "ordinal", "US" }}</p>
 <div class="post-categories">
     <!-- page.categories -->
-    <div class="cat coding"><p>Coding</p></div>
-    <div class="cat blog"><p>Blog</p></div>
+     {% if page.categories contains 'Coding'%}
+    <div class="cat Coding"><p>Coding</p></div>
+    {% endif %}
+    {% if page.categories contains 'Blog'%}
+    <div class="cat Blog"><p>Blog</p></div>
+    {% endif %}
 </div>
 </div>
 <div class="post-content">
 {{ content }}
+<dialog id="image-dialog">
+    <div id="image-dialog-container">
+        <img class="image-transition" id="image-dialog-src"/>
+        <img id="image-dialog-close" src="{{site.baseurl}}/assets/icons/x-button.svg" /> 
+    </div>
+</dialog>
 </div>
+<script>
+    const dialogItem = document.getElementById("image-dialog");
+    const dialogClose = document.getElementById("image-dialog-close");
+    const dialogDiv = document.getElementById("image-dialog-container");
+    const images = document.getElementsByClassName("zoomable-image");
+    const bigImg = document.getElementById("image-dialog-src");
+    //clicking on the X button or outside image closes it, otherwise, stop event.
+    dialogClose.addEventListener("click", (event)=>{
+        dialogItem.close();
+        bigImg.classList.add("image-transition");
+    });
+    dialogItem.addEventListener("click",(event)=>{
+        dialogItem.close();
+        bigImg.classList.add("image-transition");
+    });
+    bigImg.addEventListener("click",(event)=>{
+        event.stopPropagation();
+    });
+    ////
+    //add event listeners for each image to set dialog image source to it's own source.
+    //also wait until image loads before opening modal.
+    for (let image of images){
+        
+        image.addEventListener("click",(event)=>{
+            bigImg.setAttribute("src",event.srcElement.src);
+            //dialogItem.showModal();
+             bigImg.decode().then(()=>{
+                dialogItem.showModal();
+                bigImg.classList.remove("image-transition");
+            });
+        });
+    }
+</script>

@@ -1,15 +1,32 @@
 //general stylings
-//downloaded fonts: Handjet, Roboto Mono, IBM Plex Sans
+//downloaded fonts: Handjet, Roboto Mono, IBM Plex Sans, Raleway
 html{
-    min-height: 100%;
+    // min-height: 100%;
+    height: -webkit-fill-available;
 }
 body{
     margin: 0;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
 }
 
 h1{
     color: black;
     font-family: IBM Plex Sans;
+}
+h2{
+    font-family: Raleway;
+    color: black;
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+h2 a{
+    text-decoration: none;
+}
+h2 a:visited{
+    color: black;
 }
 p{
     color: rgb(123, 123, 123);
@@ -21,12 +38,17 @@ p{
 .current {
     color: green !important;
 }
+nav{
+    width: 100%;
+    top: 0px;
+    position: sticky;
+    z-index: 100;
+}
 .nav-container{
     background-color: white;
     margin-left: 0px;
     margin-right: 0px;
     width: 100%;
-    padding-bottom: 5px;
 }
 .nav-bar-item-container{
     margin-left: 5%;
@@ -86,12 +108,13 @@ p{
 
 footer{
     background-color: rgb(176, 176, 176);
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    // position: absolute;
+    // left: 0;
+    // bottom: 0;
     height: 100px;
     width: 100%;
     overflow: hidden;
+    margin-top: auto;
 }
 //posts CSS
 .post-h1{
@@ -100,7 +123,9 @@ footer{
     display: flex;
     justify-content: center;
 }
-
+.post-content p{
+    width: 100%;
+}
 .post-metadata{
     width: 100%;
     display: flex;
@@ -133,20 +158,69 @@ footer{
 .post-categories > .cat > p{
     margin: 0;
 }
-.post-categories > .coding{
-    font-family: Handjet;
+.post-categories > .Coding{
     background-color: greenyellow;
 }
-.post-categories > .blog{
-    font-family: Georgia, 'Times New Roman', Times, serif;
+.post-categories > .Coding p{
+    font-family: Handjet !important;
+}
+.post-categories > .Blog p{
+    font-family: Georgia, 'Times New Roman', Times, serif !important;
+}
+.post-categories > .Blog{
     background-color: yellow;
 }
 
 .post-content{
     margin-left: 20%;
     margin-right: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
+//image click functionality
+.zoomable-image{
+    cursor: pointer;
+    width: 50%;
+    max-width: 600px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.zoomable-image:hover{
+    opacity: 0.9;
+}
+#image-dialog{
+    border: none !important;
+    outline: none;
+    background-color: transparent;
+    position: fixed;
+}
+.image-transition{
+    opacity: 0;
+}
+#image-dialog-src{
+    transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    max-width: 80vw;
+    max-height: 80vh;
+    width: auto;
+}
+#image-dialog-container{
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#image-dialog-close{
+    position: fixed;
+    top: 5%;
+    right: 5%;
+    cursor: pointer;
+    width: 50px;
+}
+#image-dialog-close:hover{
+    opacity: 0.7;
+}
 //socials
 .social-container{
     display: flex;
@@ -244,7 +318,9 @@ footer{
 //about page
 .about-header-container{
     width: 100%;
+    margin-bottom: 50px;
 }
+
 .about-header{
     margin-top: 20px;
     background-color: rgb(176, 176, 176);
@@ -253,7 +329,68 @@ footer{
     margin-left: 5%;
     border-radius: 20px;
 }
+
+@media screen and (max-width: 1100px){
+    .about-header{
+        margin-top: 20px;
+        background-color: rgb(176, 176, 176);
+        width: fit-content;
+        padding: 2px 30px;
+        border-radius: 20px;
+        margin-left: 0;
+    }
+    .about-header-container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
 .about-content{
     margin-left: 5%;
     margin-top: 50px;
+    margin-right: 5%;
+}
+
+//blog page
+.blog-post-list{
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.blog-post{
+    text-decoration: none;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    margin-bottom: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    transition: all 0.25s;
+    -webkit-transition: all 0.25s;
+    width: 50%;
+    max-width: 600px;
+}
+
+.blog-post:hover{
+    background-color: lightgray;
+}
+.blog-post-top{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    position: relative;
+}
+@media screen and (max-width: 450px){
+    .blog-post{
+        width: 70%;
+    }
+    h2{
+        font-size: 1.1em;
+    }
+    .blog-post p{
+        font-size: 0.8em;
+    }
 }

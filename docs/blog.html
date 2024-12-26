@@ -2,12 +2,26 @@
 layout: default
 title: Blog
 ---
-<h1>Latest Posts</h1>
-<ul>
+<div class="about-header-container">
+  <div class="about-header">
+      <h1>
+          Latest Posts
+      </h1>
+  </div>
+</div>
+<div class="blog-post-list">
     {% for post in site.posts %}
-    <li>
-      <h2><a href=".{{ post.url }}">{{ post.title }}</a></h2>
-      <p>{{ post.excerpt }}</p>
-    </li>
+      <a href=".{{ post.url }}" class="blog-post">
+        <div class="blog-post-top">
+          <h2 style="margin-right: 125px;">{{ post.title }}</h2>
+          <h2 style="position: absolute; right: 0px; color: rgb(139, 139, 139) !important; font-size: 1em;">{{ post.date | date_to_string: "ordinal", "US" }}</h2>
+        </div>
+        <div class="post-categories">
+          {% for cat in post.categories %}
+            <div class="cat {{cat}}"><p>{{cat}}</p></div>
+          {% endfor %}
+        </div>
+        <p>{{ post.excerpt }}</p>
+      </a>
      {% endfor %}
-</ul>
+</div>
