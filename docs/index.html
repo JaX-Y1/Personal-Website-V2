@@ -13,5 +13,46 @@ title: Digital Portfolio
 <div class="home-content">
     <p>Feel free to explore my website, check out my projects, blogs, and social media!</p>
 </div>
-<!-- <h2>This is the {{page.title}} page!</h2> -->
+<div class="simulation-select-container">
+    <h2>Number of Nodes</h2>
+    <div class="radio-input" id="node-amount-select">
+        <label>
+        <input value="50" name="amount-radio" id="value-1" type="radio">
+        <span>50</span>
+        </label>
+        <label>
+        <input value="100" name="amount-radio" id="value-2" type="radio">
+        <span>100</span>
+        </label>
+        <label>
+        <input value="150" name="amount-radio" id="value-3" type="radio">
+        <span>150</span>
+        </label>
+        <label>
+        <input value="200" name="amount-radio" id="value-4" type="radio" checked="">
+        <span>200</span>
+        </label>
+        <span class="selection"></span>
+    </div>
+    <h2>Node Tether Length</h2>
+    <div class="radio-input" id="node-length-select">
+        <label>
+        <input value="25" name="length-radio" id="value-1" type="radio" checked="">
+        <span>25</span>
+        </label>
+        <label>
+        <input value="50" name="length-radio" id="value-2" type="radio">
+        <span>50</span>
+        </label>
+        <label>
+        <input value="75" name="length-radio" id="value-3" type="radio">
+        <span>75</span>
+        </label>
+        <label>
+        <input value="100" name="length-radio" id="value-4" type="radio">
+        <span>100</span>
+        </label>
+        <span class="selection"></span>
+    </div>
+</div>
 <script src="{{site.baseurl}}/assets/js/home_animation.js"></script>

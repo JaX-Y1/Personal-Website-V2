@@ -14,7 +14,7 @@ title: Blog
       <a href=".{{ post.url }}" class="blog-post">
         <div class="blog-post-top">
           <h2 style="margin-right: 125px;">{{ post.title }}</h2>
-          <h2 style="position: absolute; right: 0px; color: rgb(139, 139, 139) !important; font-size: 1em;">{{ post.date | date_to_string: "ordinal", "US" }}</h2>
+          <h2 style="position: absolute; right: 0px; color: rgb(139, 139, 139) !important;">{{ post.date | date_to_string: "ordinal", "US" }}</h2>
         </div>
         <div class="post-categories">
           {% for cat in post.categories %}

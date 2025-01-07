@@ -1,5 +1,5 @@
 //general stylings
-//downloaded fonts: Handjet, Roboto Mono, IBM Plex Sans, Raleway
+//downloaded fonts: Handjet, Roboto Mono, IBM Plex Sans, Raleway, Audiowide
 html{
     // min-height: 100%;
     height: -webkit-fill-available;
@@ -15,11 +15,38 @@ body{
 h1{
     color: black;
     font-family: IBM Plex Sans;
+    font-size: 5vw;
+}
+@media screen and (min-width: 600px){
+    h1{
+        font-size: 36px;
+    }
+    .nav-bar-item{
+        font-size: 30px !important;
+    }
+}
+@media screen and (min-width: 1100px) {
+    p{
+        font-size: 18px !important;
+    }
+    h2{
+        font-size: 1.5em !important;
+    }
+    h3{
+        font-size: 35px !important;
+    }
+    .post-categories > .cat{
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        min-width: 50px !important;
+        border: 2px black solid !important;
+        height: 25px !important;
+    }
 }
 h2{
     font-family: Raleway;
     color: black;
-    font-size: 1.5em;
+    font-size: 2.5vw;
     margin-right: 5px;
 }
 h2 a{
@@ -28,9 +55,15 @@ h2 a{
 h2 a:visited{
     color: black;
 }
+h3{
+    font-family: Raleway;
+    color: rgb(99, 99, 99);
+    font-size: 3vw;
+}
 p{
     color: rgb(123, 123, 123);
     font-family: Roboto Mono;
+    font-size: 1.5vw;
 }
 //****
 //Navigation Bar Classes
@@ -77,7 +110,7 @@ nav{
     margin-left: 10px;
     margin-right: 10px;
     font-family: Roboto Mono;
-    font-size: 30px;
+    font-size: 5vw;
 }
 .nav-bar-item a:hover{
     color: green !important;
@@ -135,7 +168,6 @@ footer{
 }
 .post-date{
     font-family: IBM Plex Sans;
-    font-size: large;
     margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -147,14 +179,17 @@ footer{
     text-align: center;
     margin-left: 5px;
     margin-right: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
     padding-top: 1px;
     padding-bottom: 1px;
-    min-width: 50px;
-    border: 2px black solid;
     border-radius: 25px;
-    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    min-width: fit-content;
+    border: 0.3vw black solid;
+    max-height: 25px;
 }
 .post-categories > .cat > p{
     margin: 0;
@@ -171,7 +206,13 @@ footer{
 .post-categories > .Blog{
     background-color: yellow;
 }
-
+.post-categories > .Electronics{
+    background-color: red;
+}
+.post-categories > .Electronics p{
+    font-family: Audiowide !important;
+    color: black;
+}
 .post-content{
     margin-left: 20%;
     margin-right: 20%;
@@ -252,7 +293,7 @@ footer{
     color: black !important;
 }
 
-//home page
+//home page *************************************************
 .lander-back-container{
     position: relative;
     width: 100%;
@@ -316,7 +357,81 @@ footer{
     display: flex;
     justify-content: center;
 }
-//about page
+
+.radio-input input {
+    display: none;
+  }
+  
+  .radio-input {
+    margin-top: 10px;
+    --container_width: 300px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 9999px;
+    background-color: #fff;
+    color: #000000;
+    width: var(--container_width);
+    overflow: hidden;
+    border: 1px solid rgba(53, 52, 52, 0.226);
+  }
+  
+  .radio-input label {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    font-weight: 600;
+    letter-spacing: -1px;
+    font-size: 14px;
+  }
+  
+  .selection {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: calc(var(--container_width) / 4);
+    z-index: 0;
+    left: 0;
+    top: 0;
+    transition: .15s ease;
+  }
+  
+  .radio-input label:has(input:checked) {
+    color: #fff;
+  }
+  
+  .radio-input label:has(input:checked) ~ .selection {
+    background-color: rgb(11, 117, 223);
+    display: inline-block;
+  }
+  
+  .radio-input label:nth-child(1):has(input:checked) ~ .selection {
+    transform: translateX(calc(var(--container_width) * 0/4));
+  }
+  
+  .radio-input label:nth-child(2):has(input:checked) ~ .selection {
+    transform: translateX(calc(var(--container_width) * 1/4));
+  }
+  
+  .radio-input label:nth-child(3):has(input:checked) ~ .selection {
+    transform: translateX(calc(var(--container_width) * 2/4));
+  }
+  
+  .radio-input label:nth-child(4):has(input:checked) ~ .selection {
+    transform: translateX(calc(var(--container_width) * 3/4));
+  }
+  .simulation-select-container{
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+//about page *******************************
 .about-header-container{
     width: 100%;
     margin-bottom: 50px;
@@ -384,14 +499,8 @@ footer{
     align-items: center;
     position: relative;
 }
-@media screen and (max-width: 450px){
+@media screen and (max-width: 600px){
     .blog-post{
         width: 70%;
-    }
-    h2{
-        font-size: 1.1em;
-    }
-    .blog-post p{
-        font-size: 0.8em;
     }
 }
