@@ -15,14 +15,24 @@ body{
 h1{
     color: black;
     font-family: IBM Plex Sans;
-    font-size: 5vw;
+    font-size: calc(12px + 5vw);
 }
 @media screen and (min-width: 600px){
     h1{
-        font-size: 36px;
+        font-size: 36px !important;
+    }
+    h2{
+        font-size: 2.5vw !important;
     }
     .nav-bar-item{
         font-size: 30px !important;
+    }
+    .post-content{
+        margin-left: 20% !important;
+        margin-right: 20% !important;
+    }
+    p{
+        font-size: 1.5vw !important;
     }
 }
 @media screen and (min-width: 1100px) {
@@ -46,7 +56,7 @@ h1{
 h2{
     font-family: Raleway;
     color: black;
-    font-size: 2.5vw;
+    font-size: calc(16px + 2.5vw);
     margin-right: 5px;
 }
 h2 a{
@@ -58,12 +68,12 @@ h2 a:visited{
 h3{
     font-family: Raleway;
     color: rgb(99, 99, 99);
-    font-size: 3vw;
+    font-size: calc(12px + 2vw);
 }
 p{
     color: rgb(123, 123, 123);
     font-family: Roboto Mono;
-    font-size: 1.5vw;
+    font-size: calc(12px + 1.5vw);
 }
 //****
 //Navigation Bar Classes
@@ -156,6 +166,7 @@ footer{
     width: 100%;
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 .post-content p{
     width: 100%;
@@ -189,7 +200,7 @@ footer{
     padding-right: 1vw;
     min-width: fit-content;
     border: 0.3vw black solid;
-    max-height: 25px;
+    height: 25px;
 }
 .post-categories > .cat > p{
     margin: 0;
@@ -214,8 +225,8 @@ footer{
     color: black;
 }
 .post-content{
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 5%;
+    margin-right: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -274,6 +285,7 @@ footer{
     text-decoration: none;
     transition: all 0.25s;
     -webkit-transition: all 0.25s;
+    align-items: center;
 }
 .social-container:hover{
     border: 1px solid rgb(72, 72, 72);
@@ -318,13 +330,15 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 .title-container h1{
     margin: 0px;
     color: rgb(6, 255, 72) !important;
     text-shadow: 2px 2px black;
     padding-bottom: 10px;
-    font-family: Roboto Mono !important; 
+    font-family: Roboto Mono !important;
+    font-size: 6vw; 
 }
 .title-container h1::after{
     content: '';
@@ -356,6 +370,7 @@ footer{
     width: 100%;
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 .radio-input input {
@@ -430,6 +445,7 @@ footer{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
   }
 //about page *******************************
 .about-header-container{
@@ -459,6 +475,9 @@ footer{
         width: 100%;
         display: flex;
         justify-content: center;
+    }
+    .blog-post-top .post-title{
+        margin-right: 150px !important; 
     }
 }
 .about-content{
@@ -499,8 +518,18 @@ footer{
     align-items: center;
     position: relative;
 }
+.blog-post-top .post-title{
+    margin-right: 125px;
+}
 @media screen and (max-width: 600px){
     .blog-post{
-        width: 70%;
+        width: 80%;
+    }
+    .blog-post-top .post-title{
+        margin-right: 150px !important; 
+        font-size: calc(16px + 0.5vw) !important;
+    }
+    .blog-post-top .post-date{
+        font-size: calc(16px + 0.5vw) !important;
     }
 }
