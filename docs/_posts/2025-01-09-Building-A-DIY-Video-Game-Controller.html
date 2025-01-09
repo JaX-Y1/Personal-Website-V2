@@ -1,0 +1,45 @@
+---
+title: Building A DIY Video Game Controller
+layout: post
+author: Jackson
+excerpt: Using the Arduino platform to make a custom controller for Nintendo Switch.
+categories: [Coding, Electronics]
+---
+<!-- forced title because I need all caps DIY -->
+ <p>
+    New year, new projects! The first thing I've been wanting to make for a while was
+    my very own DIY video game controller. To do this, I needed a micro controller that
+    had the ATmega32U4 chip, which crucially has native USB support. I bought an
+    <a href="https://www.amazon.com/KEYESTUDIO-Leonardo-Development-Board-Arduino/dp/B0786LJQ8K/ref=sr_1_4?sr=8-4">
+        Arduino Leonardo on Amazon</a> for $14, which will do the job nicely.
+    Next, I cloned this <a href="https://github.com/playAbilityTech/Arduino-JoyCon-Library-for-Nintendo-Switch">
+        Github repository</a>, which provides a simple library for executing controller
+        commands via a niche workaround with how Nintendo handles their wired controllers.
+        <br/><br/>As of now, building a custom Nintendo Switch Controller from the ground up is
+        not feasable, as the Pro Controller and Joycon's communication protocols have not
+        been fully reverse engineered yet. However, the 
+        <a href="https://www.amazon.com/Nintendo-Tournament-Controller-Officially-Licensed-Pokemon/dp/B01A6LEXFK">
+            Hori Pokken Tournament DX Pro Pad</a> for the Wii U gained compatibility
+            with the Nintendo Switch after firmware update 3.0.0. This particular controller
+            has already been reverse engineered, allowing modders to finally gain access
+            to custom controller communication with the Switch!
+        <br/><br/>
+        History lesson aside, I opened up the Arduino IDE to test out the example code.
+        Upon hitting compile, I got the error <strong><code>"Property 'upload.tool.serial' is undefined"</code></strong>. This
+        was actually not the library's fault, as it was last updated over 4 years ago. All I needed to do was add 
+        <strong><code>myboard.upload.tool.serial=avrdude</code></strong> right below
+        <strong><code>myboard.upload.tool=avrdude</code></strong> in <strong><code>boards.txt</code></strong>.
+        The Arduino IDE used to be more forgiving, but at some point after this code was made, 
+        a change was made so that the serial upload tool had to be specified instead of just
+        adapting the non-serial upload tool if it wasn't.
+        <br/><br/>Besides that hiccup, everything else specified in installation instructions worked
+        just fine for me. The example code uses internal pull-up resistors for the pins, so the push-buttons must be wired to ground.
+        After setting up a few push buttons for L, R, A, and B, I plugged in my Arduino Leonardo
+        into the USB port on the Switch Dock. If you are going to test, you need at least the L or R button
+        set up because that's how the controller gets recognized by the Switch.
+        <br/><br/>Initial testings of my set up buttons were successful! I used the input test
+        feature in the Switch system settings to test both short and long button presses.
+        My next goal is to buy some joystick sensors so I can test that functionality.
+        After that, it's time to make a full controller!
+        <br/><br/>Thanks for reading and stay tuned for more updates!
+ </p>

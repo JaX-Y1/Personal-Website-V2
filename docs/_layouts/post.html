@@ -30,7 +30,7 @@ isPost: true
     </div>
 </dialog>
 </div>
-<script>
+<script type="text/javascript">
     const dialogItem = document.getElementById("image-dialog");
     const dialogClose = document.getElementById("image-dialog-close");
     const dialogDiv = document.getElementById("image-dialog-container");
@@ -39,11 +39,11 @@ isPost: true
     //clicking on the X button or outside image closes it, otherwise, stop event.
     dialogClose.addEventListener("click", (event)=>{
         dialogItem.close();
-        bigImg.classList.add("image-transition");
+        bigImg.classList.remove("image-transition");
     });
     dialogItem.addEventListener("click",(event)=>{
         dialogItem.close();
-        bigImg.classList.add("image-transition");
+        bigImg.classList.remove("image-transition");
     });
     bigImg.addEventListener("click",(event)=>{
         event.stopPropagation();
@@ -58,7 +58,7 @@ isPost: true
             //dialogItem.showModal();
              bigImg.decode().then(()=>{
                 dialogItem.showModal();
-                bigImg.classList.remove("image-transition");
+                bigImg.classList.add("image-transition");
             });
         });
     }

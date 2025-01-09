@@ -248,12 +248,15 @@ footer{
     background-color: transparent;
     position: fixed;
 }
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
 .image-transition{
-    opacity: 0;
+    animation-name: fade-in;
+    animation-duration: 1s;
 }
 #image-dialog-src{
-    transition: all 0.2s ease-in;
-    -webkit-transition: all 0.2s ease-in;
     max-width: 80vw;
     max-height: 80vh;
     width: auto;
@@ -476,9 +479,6 @@ footer{
         display: flex;
         justify-content: center;
     }
-    .blog-post-top .post-title{
-        margin-right: 150px !important; 
-    }
 }
 .about-content{
     margin-left: 5%;
@@ -519,7 +519,7 @@ footer{
     position: relative;
 }
 .blog-post-top .post-title{
-    margin-right: 125px;
+    margin-right: 180px;
 }
 @media screen and (max-width: 600px){
     .blog-post{
