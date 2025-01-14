@@ -14,14 +14,16 @@ show_excerpts: true
 title: Jackson's Digital Portfolio
 email: jackson.marshall1204@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Jackson Marshall's personal website showcasing projects, interests, and more!
 #baseurl: "/Personal-Website-V2" #domain name has been added, no need for basename
 url: "https://jax-y1.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
-github_username:  JaX-Y1
-
+github_username:  GitHub
+github_link: https://github.com/JaX-Y1
+linkedin_username: LinkedIn
+linkedin_link: https://www.linkedin.com/in/andrewjmarshall2
+instragram_username: Instagram
+instagram_link: https://www.instagram.com/applejacks3055/
 # Build settings
 theme: minima
 plugins:
