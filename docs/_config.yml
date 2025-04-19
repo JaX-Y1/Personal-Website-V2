@@ -24,6 +24,7 @@ linkedin_username: LinkedIn
 linkedin_link: https://www.linkedin.com/in/andrewjmarshall2
 instragram_username: Instagram
 instagram_link: https://www.instagram.com/applejacks3055/
+cache_string: 1
 # Build settings
 theme: minima
 plugins:
