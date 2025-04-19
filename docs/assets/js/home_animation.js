@@ -19,6 +19,22 @@ var previousTime = startTime;
 var currentTime = 0;
 var deltaTime = 0;
 var isUpdatingArray = false; //to prevent accessing undefined indexes
+const colorPickerWidth = 150;
+var nodeColor = "#FFFF00";
+var nodeTetherColor = {
+    r: 255,
+    g: 255,
+    b: 0,
+};
+//color picker for node color
+const colorPicker = new iro.ColorPicker('#colorpicker',{
+    color: nodeColor,
+    width: colorPickerWidth,
+});
+colorPicker.on("color:change",(color)=>{
+    nodeTetherColor = color.rgb;
+    nodeColor = color.hexString;
+});
 init();
 refresh(100,100, (ctx,ratio, doUpdate)=>{
     if(!isUpdatingArray){
@@ -125,8 +141,8 @@ function drawCanvas(ctx){
     for(let i = 0; i < numNodes; ++i){
         ctx.beginPath();
         ctx.arc(nodeArray[i].xCord, nodeArray[i].yCord, refRadius, 0, 2 * Math.PI);
-        ctx.fillStyle = "yellow";
-        ctx.strokeStyle = "yellow";
+        ctx.fillStyle = nodeColor;
+        ctx.strokeStyle = nodeColor;
         ctx.lineWidth = lineWidth;
         ctx.fill();
         ctx.stroke();
@@ -138,7 +154,7 @@ function drawCanvas(ctx){
                     ctx.moveTo(nodeArray[i].xCord, nodeArray[i].yCord);
                     ctx.lineTo(nodeArray[j].xCord, nodeArray[j].yCord);
                     alphaValue = scale(distanceBtwnNodes(nodeArray[i],nodeArray[j]),0,lineDistance,1.0,0.0);
-                    ctx.strokeStyle = `rgba(255,255,0, ${alphaValue})`;
+                    ctx.strokeStyle = `rgba(${nodeTetherColor.r},${nodeTetherColor.g},${nodeTetherColor.b}, ${alphaValue})`;
                     ctx.stroke();
                 }
             }
@@ -211,4 +227,4 @@ function scale (number, inMin, inMax, outMin, outMax, clamp=false) {
         }
     }
 }
-console.log(scale(700,300, 800, 0.1, 1.0, true));
+//console.log(scale(700,300, 800, 0.1, 1.0, true));

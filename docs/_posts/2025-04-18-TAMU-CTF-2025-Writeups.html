@@ -1,0 +1,269 @@
+---
+title: TAMU CTF 2025 Writeups
+layout: post
+author: Jackson
+excerpt: My Solved Challenge Writeups
+categories: [Coding]
+---
+<p>
+    Happy Good Friday Everyone! After a very busy past few weeks, I'm finally getting around
+    to posting my writeups for the TAMU 2025 CTF Event. This was my first capture the flag,
+    and I had a great time and learned a lot. Due to my background, most of my solved challenged
+    were web-related, as I know next to nothing about reverse engineering code and low-level
+    programming. I will learn someday... 
+</p>
+<h3>Aggie Bookstore</h3>
+<h4>Objective</h4>
+<p>Find the flag, hidden somewhere in the website.</p>
+<h4>Reconnaissance</h4>
+<p>
+    We are given access to the source code. 
+    The website uses Flask, a python backend to handle its queries with a MongoDB NoSQL database. 
+    We are given two endpoints: <strong>/</strong> (root) and <strong>/search</strong>, with <strong>/search</strong> handling GET and POST requests. 
+    The author and title parameters are passed through a sanitized query before being sent to MongoDB.
+    The search POST request requires the method to include the Header <strong>application/json</strong> and 
+    wants a raw JSON body or else it throws an error.
+</p>
+<h4>Vulnerability Assessment</h4>
+<p>
+    The big vulnerability is that the sanitize function is not used for all types of post body data. 
+    The sanitize function is only called if the parameter is a string, but it DOES NOT get called if 
+    the parameter is a dictionary. We can use this to perform NOSQL injection into MongoDB.
+    This vulnerability is only associated with the POST request. 
+    The GET request sanitizes the URL query parameters correctly.
+</p>
+<h4>Exploitation</h4>
+<p>Crafting the raw JSON, we get:</p>
+    {% highlight json %}
+    { "title": {"$ne": ""} }
+    { "author": {"$ne": ""} }{% endhighlight %}
+<p>
+    I can make this POST request with the crafted dictionary using <a href="https://www.postman.com/">Postman</a>, 
+    my go-to tool for API testing. Make sure to set the content type to <strong>application/json</strong>.
+    This will return all books with a title not equal to an empty string and an author not equal to an empty string, 
+    which should be all entries. Lucky for us, this includes a book by admin with the title that contains our flag.
+
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/bookstore1.png"/>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/bookstore2.png"/>
+
+
+<h3>Transparency</h3>
+<h4>Objective</h4>
+<p>Find the flag, hidden on a subdomain for this website.</p>
+<h4>Reconnaissance</h4>
+<p>
+    This is a pretty "transparent" challenge (haha) as it tells you on the landing page 
+    that the web developer decided to switch from using different URLs to store shareable 
+    secret pages to subdomains. This is a very stupid move don’t do that if you are building a website.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/transparency1.png"/>
+<p>Going to the example page, we see a pretty standard and boring webpage. This web developer is very confident
+    that unique subdomains solve all the security problems in the world. Unfortunately this is not the case.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/transparency2.png"/>
+<h4>Vulnerability Assessment</h4>
+<p>
+    There are plently of websites that will enumerate a domain's subdomains for you. A simple google search
+    will give you everything you need. I will be using <a href="https://crt.sh/">this</a> certificate search tool.
+    Putting in the website's domain, we can see that this smarty pants decided to create separate SSL certifications
+    for each subdomains instead of a wild card certificate, allowing us to see each subdomain and go to it's secret
+    page.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/transparency3.png"/>
+<h4>Exploitation</h4>
+<p>Since this is a CTF challenge, there are only two subdomains that we can check. One was the example we just visited,
+    so the second one will have our flag. Challenge complete.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/transparency4.png"/>
+<h3>Moving Slowly</h3>
+<h4>Objective</h4>
+<p>Find the flag, hidden somewhere in the website.</p>
+<h4>Reconnaissance</h4>
+<p>
+    We are given the source code for this challenge, which is a basic python app. 
+    It uses a really old version of chat gpt to give you a funny response if you enter the wrong password.
+</p>
+<h4>Vulnerability Assessment</h4>
+<p>
+    Unfortunately, the password validity check is very bad. It loops through each character 
+    and checks if it matches the same character in the same index for the correct password.
+    This means if you enter a portion of the password that is correct, you can still pass the check.
+</p>
+<h4>Exploitation</h4>
+<p>To make this easy on ourselves, let's stick to one character. After brute forcing all 
+    alphanumeric characters, which takes a while, but isn't horrible, we find the letter 
+    we need to make the website give us our flag.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/slowly1.png"/>
+<h3>Deflate</h3>
+<h4>Objective</h4>
+<p>Find the flag, hidden in an encrypted ZIP file.</p>
+<h4>Reconnaissance</h4>
+<p>
+    The ZIP file is encrypted using ZIPCrypto. After looking at <a href="https://blog.devolutions.net/2020/08/why-you-should-never-use-zipcrypto/">this blog</a> 
+    writeup on ZIPCrpyto's vulnerabilities, we find our point of attack to be quite apparent.
+</p>
+<h4>Vulnerability Assessment</h4>
+<p>
+    After downloading <a href="https://github.com/kimci86/bkcrack">bkcrack</a>,  we are treated to a few examples 
+    in the git repository that will help us decrypt this file. ZIPCrypto has a plaintext vulnerability.
+    When running <strong><code>bkcrack -L secrets.zip</code></strong>, we find a git repository zipped up.
+    There are a few files in the ZIP file that use STORE instead of compressed. 
+    This makes it very easy for us, because if we can guess 12 bytes of plaintext from 
+    one of these STORE files, we can crack this bad boy open.
+</p>
+<h4>Exploitation</h4>
+<p>
+    One of the simpler files we can use is the .git/HEAD file. We know this stores a reference to the master branch, 
+    so our known plaintext is <strong>ref: refs/heads/master</strong>, which is plenty of plaintext to crack this file open. 
+    After putting our secret in a txt file, we can run <strong><code>bkcrack -C secrets.zip -c .git/HEAD -p plain.txt</code></strong>
+    to get our secret keys. We can now run <strong><code>bkcrack -C secrets.zip -k key1 key2 key3 -D secrets_without_password.zip</code></strong>
+    to get an unencrypted version of the ZIP file, which we can freely look at the content and unzip.
+    Once unzipped, the flag is not anywhere to be found. Weird. However, since this a git repository, 
+    we can look at the previous commits using “git log”. It appears that there was a previous commit 
+    that deleted a python file that contained a flag. Reverting the commit and running the python file 
+    prints out our flag, completing the challenge.
+</p>
+<h3>Modern Banking</h3>
+<h4>Objective</h4>
+<p>Buy the CTF flag on the flag page for $99,999,999.99</p>
+<p>Find a way to gain access to an account with that amount of money and buy the flag.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/banking2.png"/>
+<h4>Reconnaissance</h4>
+<p>Since we are given access to the source code, there is a lot to look through. </p>
+   <p>
+        <strong>default.conf</strong>
+        <ul>
+            <li><p>Sets up a simple HTTP/HTTPS server. Only accepts connections from <strong>/</strong> (root) or 
+                <strong>/index.cgi</strong></p>
+            </li>
+            <li><p>No apparent vulnerabilities here.</p></li>
+        </ul>
+    </p>
+    <p>
+        <strong>entry.sh</strong>
+        <ul>
+            <li><p>An initial script to set up the server, but stays running to perform regular tasks.</p>
+            </li>
+            <li><p>Regularly runs a while loop every 20 seconds. Appears to echo the port value,
+                register an admin account called "administrator" with an environment variable <strong>$PASS</strong>
+                for the password.
+            </p></li>
+            <li><p>The loop also logs into the admin account and stores it's session cookie. It then goes to an
+                admin page to call an action called <strong>refresh</strong>, using an environment secret variable called
+                <strong>$SECRET</strong>. Based off a cursory look at the source code, this endpoint added the maximum amount of money
+                to the admin's account.
+            </p></li>
+            <li><p>Finally, and this appears to be the most important line here, the admin goes to a <strong>batch</strong>
+                page, which appears to process all pending transactions.
+            </p></li>
+        </ul>
+    </p>
+    <p>
+        <strong>banking.cob</strong>
+        <ul>
+            <li><p>This is the source code file. This application uses a legacy business-oriented programming language called
+                <a href="https://en.wikipedia.org/wiki/COBOL">Cobol</a>, which is used for large-scale batch and transaction processes.
+            </p>
+            </li>
+            <li><p>I will go into more depth in the next session about the source code vulnerabilities.</p></li>
+        </ul>
+    </p>
+<h4>Vulnerability Assessment</h4>
+<p>The source code in <strong>banking.cob</strong> has multiple flaws. The first issue I discovered was
+</p>
+<p><strong>Database Corruption</strong></p>
+{% highlight cobol %}
+    ......      IF Datadone = 1 AND FUNCTION NUMVAL (Dataval) <=0
+    012250         AccountCount AND FUNCTION NUMVAL (Dataval) >= 0
+    012260         MOVE Account IN AccountList (FUNCTION NUMVAL (Dataval))
+    012270         TO Account OF AccountRecord
+    012300
+    012310         OPEN I-O ACCOUNTS
+    012320         DELETE ACCOUNTS RECORD
+    012330         CLOSE ACCOUNTS{% endhighlight %}
+<p>Account IDs start at index 1, and this particular section of code allows for an index of value 0. 
+    Therefore, sending a POST request to delete a bank account of index 0 could cause a database corruption, 
+    leading to unintended behavior.
+    <br/>
+    While potentially a key to getting money if a corruption happens to give us a lot of money or access 
+    to an account with a lot of money, the chances of this are low and random.
+</p>
+<p><strong>Information Disclosure</strong></p>
+<p>Here's our lucky break. When accessing the admin page as a non-admin, we can see 
+    a comment in the HTML source code. Comparing with the COBOL source code, we can see this account must belong
+    to the admin. This is a key to getting our money for the flag, as we now know the admin 
+    account number to steal money from.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/banking7.png"/>
+<p><strong>Carriage Return Line Feed (CRLF) Injection</strong></p>
+{% highlight cobol %}
+        000350   ORGANIZATION IS LINE SEQUENTIAL
+        000360   ACCESS SEQUENTIAL.{% endhighlight %}
+<p>If input sanitization is faulty, users can enter a url encoded newline character in their 
+    POST request to potentially create new records. These unintended records can be crafted to perhaps
+    give us infinite money. <br/>
+    This is likely our ticket to getting enough money to buy the flag. Since we know the admin 
+    account number from our previous exploit, we might be able to add a transaction to the 
+    record to send money from the admin account to our own account.
+</p>
+
+<h4>Exploitation</h4>
+<p>I will be using POSTMAN again to conduct the exploit, as it allows for easy crafting 
+    of HTTP requests and has support for automatic handling of session cookies.
+    The exploit we will be using is the CRLF injection on the transaction page. 
+    I will craft a POST request to be delivered to the <strong>transact</strong> page.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/banking4.png"/>
+<p>Since the COBOL source code actually supports decoding URL-encoded values, we will use that.
+    The URL-encoded value for a newline is <strong>%0A</strong>.
+</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/banking5.png"/>
+<p>Let's dive a little deeper into what makes this exploit possible. We will start by looking
+    at the format of a transaction record that makes this possible.
+</p>
+{% highlight cobol %}
+        000770 01 AccountSrc PIC 9(12) VALUE 0.
+        001000 01 AccountDst PICTURE 9(12) VALUE 0.
+        001010 01 Credit     PICTURE 9(20) VALUE 0.
+        001020 01 Memo       PICTURE X(64).{% endhighlight %}
+<p>
+    The Memo can hold 64 bytes of any character, allowing us to insert URL encoded new lines. 
+    The <strong>102-Decode</strong> function decodes the newline character. There is no other sanitization done 
+    on the memo. After calling the transaction, the page calls the <strong>105-DB-Transact</strong> function. 
+    This writes the Memo to the <strong>Pending Record</strong>. 
+    Remember that every 20 seconds, the admin account calls the <strong>103-DB-BatchProcess</strong> 
+    function to perform the transactions held in the <strong>Pending Record</strong>. 
+    Since the records are stored sequentially, and the memo holds a second malicious record 
+    after the newline, the second malicious record will get processed directly after the 
+    legitimate one. From the record structure, make sure to craft the record after the 
+    newline in the form <strong>&lt;source account id&gt; &lt;destination account id&gt; &lt;transaction amount&gt; 
+        &lt;optional memo&gt;</strong>.
+</p>
+
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/banking1.png"/>
+<p>With a correctly crafted transaction request, you should be able to transfer any amount of money 
+    you want from the admin account to yours. With the money in your account, purchase the
+    flag and you are done!</p>
+<img class="zoomable-image" src="{{site.baseurl}}/assets/images/{{page.title}}/banking3.png"/>
+<h3>Impossible</h3>
+<h4>Objective</h4>
+<p>Find the flag, hidden somewhere in the flash game.</p>
+<h4>Reconnaissance</h4>
+<p>The website is simple enough, with a single page that appeared to hold a flash 
+    game player. Since flash is depreciated, this does not work on modern browsers. 
+    However, taking a look at the HTML, we can find the name of the swt file <strong>impossible_ctf.swf</strong>
+    Going to the URL <strong>/impossible_ctf.swf</strong> downloads this file.
+</p>
+<h4>Vulnerability Assessment</h4>
+<p>
+    SWT files are Adobe flash files that can be decompiled with <a href="https://github.com/jindrapetrik/jpexs-decompiler">ffdec</a>.
+</p>
+<h4>Exploitation</h4>
+<p>
+    Decompiling the flash file
+    gives us access to all the assets, including the win screen from the game Impossible Quiz. 
+    The flag is printed out on the win screen, completing this challenge.
+</p>
